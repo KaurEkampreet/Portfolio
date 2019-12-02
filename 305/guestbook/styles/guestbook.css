@@ -1,0 +1,18 @@
+#main {
+    background-color: white;
+    margin: 0 7em;
+    padding: 3.5em;
+}
+
+.err {
+    visibility: hidden;
+    color: darkred;
+}
+
+#mail {
+    display: none;
+}
+
+#otherForm {
+    display: none;
+}

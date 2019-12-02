@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="e4e80aa9-292e-429c-8eb5-3a5191e55778" name="GreenRiverDev" url="http://ekaur.greenriverdev.com">
+        <fileTransfer host="ekaur.greenriverdev.com" port="18765" rootFolder="/home/ekaurgre/public_html" accessType="SFTP">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+          <option name="port" value="18765" />
+        </fileTransfer>
+      </webServer>
+      <webServer id="264fde39-515e-454f-bce4-392fd84be431" name="eei-coders" url="http://eei-coders.greenriverdev.com">
+        <fileTransfer host="eei-coders.greenriverdev.com" port="18765" rootFolder="/home/eeicoder/public_html" accessType="SFTP">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+          <option name="port" value="18765" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
