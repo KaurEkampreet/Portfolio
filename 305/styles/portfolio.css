@@ -1,0 +1,37 @@
+#list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+
+}
+
+.lists {
+    float: left;
+}
+
+.lists a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+lists a:hover {
+    background-color: #111;
+}
+
+.err {
+    color: red;
+    visibility: hidden;
+}
+
+
+#main {
+    padding: 1em;
+    border: 3px solid green;
+    box-shadow: 5px 15px 8px 15px #888888;
+    width: 70%;
+}
