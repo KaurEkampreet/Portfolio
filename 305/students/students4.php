@@ -71,6 +71,7 @@ error_reporting(E_ALL);
             $aid = $row['advisor'];
             $aFirst = $row['advisor_first'];
             $aLast = $row['advisor_last'];
+
             echo "<tr>
                 <td>$sid</td>
                 <td>$sLast, $sFirst</td>

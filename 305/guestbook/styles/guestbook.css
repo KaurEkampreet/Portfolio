@@ -1,7 +1,8 @@
 #main {
-    background-color: white;
+background-color: white;
     margin: 0 7em;
     padding: 3.5em;
+
 }
 
 .err {
@@ -15,4 +16,58 @@
 
 #otherForm {
     display: none;
+
 }
+
+
+
+body {
+    background-color: lightslategrey;
+}
+
+.card > img {
+    background-color: #ffe484;
+}
+#emailhtml-block {
+    display: none;
+}
+#emailtext-block {
+    display: none;
+}
+.err {
+    color: darkred;
+    visibility: hidden;
+}
+fieldset {
+    border: 1px solid grey;
+    padding: 1em;
+}
+#format{
+    display: none;
+}
+
+.jumbotron {
+    background-color: maroon;
+    color: #ececf6;
+}
+
+legend {
+    font-weight: bold;
+    color: #10707f;
+    font-variant: small-caps;
+    font-size: 125%;
+    width: 25%;
+}
+
+#main {
+    background-color: white;
+    margin: 0 10em 15em 10em;
+    padding: 6em;
+}
+#other-block {
+    display: none;
+}
+/*
+#text-block {
+    display: none;
+}*/

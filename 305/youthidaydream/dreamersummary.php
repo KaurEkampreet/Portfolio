@@ -1,20 +1,43 @@
 <?php
-/** 305/new-students.php collect database fro new student
- *
- *  Nov 4, 2019
+/**
+ * It-305
+ * Imelda Medina
+ * 11/20/2019
+ * This php file validates the guest form and inserts the data into the sql is data is valid
  */
-//Turn on error reporting -- this is critical!
+
+//ERROR reporting
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
-?>
 
+//Start a session
+session_start();
+
+//If user is not logged in, reroute them to the login page
+if(!isset($_SESSION['username'])){
+    header('location: ../idaydream/index.html');
+}
+
+?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>GRC Student Summary</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" >
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="styles/youthidaydream.css">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Questrial&display=swap" rel="stylesheet">
+
+    <title>Dreamer Summary Form</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="images/favicon.png">
     <link rel="stylesheet" href="//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.bootstrap.min.css">
 </head>
@@ -22,9 +45,16 @@ error_reporting(E_ALL);
 
 <div class="container">
     <br>
+    <form class="form-inline">
+        <h3 class="mr-5">Dreamer Summary</h3>
+        <div class="float-right">
+            <a href="email.php?a=b"><button type="button" class="btn btn-primary button">Email</button></a>
+            <a href="../idaydream/index.html"><button type="button" class="btn btn-primary button">Home</button></a>
+            <a href="../idaydream/volunteersummary.php"><button type="button" class="btn btn-primary button">Volunteer Summary</button></a>        </div>
+    </form>
 
-    <h3>Dreamer Summary</h3>
-
+    <hr>
+    <br>
     <?php
 
     require('/home/eeicoder/connect.php');
@@ -35,7 +65,7 @@ error_reporting(E_ALL);
     //            WHERE dreamer.ethnicity_id = ethnicity.ethnicity_id';
 
     $sql='SELECT dreamer.dreamer_Id, name, phone, e_mail, birth, gender, grad, interest, 
-            career, favfood, parentNAme, parentPhone, parentEmail, ethnicity_type, otherEthnicity,active
+            career, favfood, parentNAme, parentPhone, parentEmail, ethnicity_type, otherEthnicity,status
             FROM dreamer INNER JOIN ethnicity ON dreamer.ethnicity_Id =
             ethnicity.ethnicity_Id
             ORDER BY dreamer.dreamer_Id DESC';
@@ -51,21 +81,29 @@ error_reporting(E_ALL);
     $result = mysqli_query($cnxn, $sql);
     //var_dump($result);
 
+    $sqlStatus = "SELECT status_id, status_type
+    FROM status";
+    $resultStatus = mysqli_query($cnxn, $sqlStatus);
+    $statusArray =array();
+    foreach ($resultStatus as $status) {
+        $id = $status['status_id'];
+        $type = $status['status_type'];
 
-    //    $rs = mysqli_query('SELECT email from dreamers LIMIT 0, 10');
-    //
-    //    while(list($email) = mysqli_fetch_row($rs)
-    //    {
-    //     Send Email
-    //        mail($email, 'Your Subject', 'Your Message');
-    //    }
+
+        $statusArray[$id] = "$type";
+    }
+
     ?>
-
+    <?php
+    //Include the nav page
+    include 'nav.php';
+    ?>
     <table id="dreamer-table" class="display">
         <thead>
         <tr>
             <th>Dreamer Id</th>
             <th>Name</th>
+            <th>Status</th>
             <th>Phone Number</th>
             <th>Email</th>
             <th>Gender</th>
@@ -78,7 +116,7 @@ error_reporting(E_ALL);
             <th>Tutor or Parent Name</th>
             <th>Tutor or Parent Phone </th>
             <th>Tutor or Parent Email</th>
-            <!--            <th>Active</th>-->
+
         </tr>
         </thead>
         <tbody>
@@ -102,11 +140,19 @@ error_reporting(E_ALL);
             $parentNAme = $row['parentNAme'];
             $parentPhone = $row['parentPhone'];
             $parentEmail = $row['parentEmail'];
-//            $active = $row['active'];
+            $sid = $row['status'];
 
             echo "<tr>
         <td>$dreamer_Id</td>
         <td>$name</td>
+            <td> 
+            <select data-did='$dreamer_Id' class='sid'>";
+            foreach ($statusArray as $id => $name) {
+                $sel = ($id == $sid) ? "selected='selected' " : "";
+                echo "<option value='$id' $sel> $name</option>";
+            }
+            echo"</select>
+            </td>
         <td>$phone</td>
         <td>$e_mail</td>
         <td>$gender</td>";
@@ -130,17 +176,13 @@ error_reporting(E_ALL);
         </tbody>
     </table>
 
-
-    <div class="container">
-        <a href="email.php?a=b" class="p-md-2 mb-auto bg-dark text-white">Email</a>
-        <a href="../idaydream/index.html" class="p-md-2 mb-auto bg-dark text-white inline">Home</a>
-    </div>
-
     <br>
 
-
 </div>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script
+        src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <script src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
@@ -162,8 +204,17 @@ error_reporting(E_ALL);
                     tableClass: 'table'
                 } )
             }
-        },
+        }
     } );
+    $('.sid').on('change', function() {
+        alert("sid: " + $(this).val() + ", did: " + $(this).attr('data-did'));
+        var sid = $(this).val();
+        var did = $(this).attr('data-did');
+        //*** "SLIM" version of JQuery does not support ajax!
+        $.post( "updatestatus.php", { sid: sid, did: did } );
+    });
+
+
 </script>
 
 </body>

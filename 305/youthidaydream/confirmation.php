@@ -188,7 +188,7 @@ $parentEmail =$_POST['parentEmail'];
                     '$phone', '$email',
                     '$birth','$gender', '$grad','$interest', '$career', 
                     '$favfood', '$parentNAme','$parentPhone','$parentEmail',
-                    '$ethnicity', '$ethnicityOther', '1')";
+                    '$ethnicity', '$ethnicityOther', default )";
 
 
         //Print SQL statement, for testing purposes only
